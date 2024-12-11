@@ -5,3 +5,22 @@ Non Blocking I/O? -- multiple request with less threads
 Blocking server?
 
 ECMA Script-- standard/rules for scripting anguage-- example: syntax of language
+
+globalThis --> global object for all JSengines
+
+CJS ---> module are protected by default--- to access the variable in module we have export them and import   using require ex: module.exports = {functionName, x} and const obj = require"./skndf "
+by default in Node Js
+synchorinous
+non strict
+
+require --> all the code of the module is wraped inside the function(IIFE) -[immediate invoked function expression]
+
+MJS/es6 --> ex: export function Sum(){} and import func from  "./skndf "
+
+
+
+have to give type in pkgjson file as "module"
+Async -- optional
+strict
+
+Inline Caching : https://javascript.plainenglish.io/v8-engine-and-inline-caching-in-javascript-fef80054a551
