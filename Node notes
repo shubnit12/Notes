@@ -24,3 +24,10 @@ Async -- optional
 strict
 
 Inline Caching : https://javascript.plainenglish.io/v8-engine-and-inline-caching-in-javascript-fef80054a551
+
+mark and sweep: 
+
+stream and buffer
+
+put and patch
+event listner
