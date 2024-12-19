@@ -1,0 +1,103 @@
+1. Basic Syntax
+Literal Characters:
+Example: The regex hello matches the string "hello".
+echo "hello world" | grep "hello"
+2. Metacharacters
+Dot (.): Matches any single character (except newline).
+
+Example: The regex h.llo matches "hello", "hallo", "hzllo", etc.
+echo "hello hallo hzllo" | grep "h.llo"
+Caret (^): Asserts the position at the start of a line.
+
+Example: ^hello matches lines that start with "hello".
+echo -e "hello world\nworld hello" | grep "^hello"
+Dollar ($): Asserts the position at the end of a line.
+
+Example: world$ matches lines that end with "world".
+echo -e "hello world\nworld hello" | grep "world$"
+Asterisk (*): Matches zero or more of the preceding element.
+
+Example: lo* matches "l", "lo", "loo", etc.
+echo "l lo loo" | grep "lo*"
+Plus (+): Matches one or more of the preceding element.
+
+Example: lo+ matches "lo", "loo", etc., but not "l".
+echo "l lo loo" | grep "lo+"
+Question Mark (?): Matches zero or one of the preceding element.
+
+Example: colou?r matches both "color" and "colour".
+echo "color colour" | grep "colou?r"
+Braces ({}): Matches a specific number of occurrences.
+
+Example: a{3} matches "aaa" exactly.
+echo "aa aaa aaaa" | grep "a{3}"
+3. Character Classes
+Square Brackets ([]): Matches any one character inside brackets.
+
+Example: [abc] matches 'a', 'b', or 'c'.
+echo "a b c d" | grep "[abc]"
+Negation (^ inside brackets): Matches any character except those specified.
+
+Example: [^abc] matches any character except 'a', 'b', or 'c'.
+echo "a b c d e" | grep "[^abc]"
+Ranges: Matches a range of characters.
+
+Example: [0-9] matches any digit.
+echo "abc 123 xyz" | grep "[0-9]"
+4. Predefined Character Classes
+\d: Matches any digit.
+
+Example: \d matches "1", "2", etc.
+echo "abc 123" | grep -P "\d"
+\D: Matches any non-digit.
+
+Example: \D matches "a", "b", etc.
+echo "abc 123" | grep -P "\D"
+\w: Matches any word character (alphanumeric + underscore).
+
+Example: \w matches "a", "1", "_".
+echo "a 1 _" | grep -P "\w"
+\W: Matches any non-word character.
+
+Example: \W matches spaces and punctuation.
+echo "a! b@" | grep -P "\W"
+\s: Matches any whitespace character.
+
+Example: \s matches spaces and tabs.
+echo "a b" | grep -P "\s"
+\S: Matches any non-whitespace character.
+
+Example: \S matches "a" and "b" in "a b".
+echo "a b" | grep -P "\S"
+5. Grouping and Capturing
+Parentheses (()): Groups patterns together.
+
+Example: (abc)+ matches one or more occurrences of "abc".
+echo "abc abc abc" | grep -E "(abc)+"
+Non-capturing groups ((?:...)): Groups without capturing.
+
+Example: (?:abc)+ behaves like usual, but doesn’t capture value.
+echo "abc abc abc" | grep -E "(?:abc)+"
+6. Alternation
+Pipe (|): Acts like a logical OR.
+Example: cat|dog matches either "cat" or "dog".
+echo "cat dog" | grep -E "cat|dog"
+7. Anchors
+Using ^ and $ in combination with other terms for precise matching:
+For example:
+echo -e "hello\nworld\nfoo\nbar" | grep "^foo$"
+8. Greedy vs. Non-Greedy Matching
+Greedy (.*) matches as much as possible.
+Example: a.*b will match from the first 'a' to the last 'b'.
+echo "a1b2c3b4" | grep "a.*b"
+Non-Greedy (.*?):
+Example: a.*?b will match from the first 'a' to the first 'b'.
+Note: Standard grep doesn't support non-greedy; use perl or grep -P for PCRE.
+echo "a1b2c3b4" | grep -P "a.*?b"
+9. Escape Special Characters
+Use a Backslash (\) to escape special characters.
+Example: To match a period, use \..
+echo "1.2.3" | grep "1\.2\.3"
+10. Testing and Tools
+Regex Testing Tools: Use online regex testers (like regex101) to experiment interactively.
+Example: To verify complex regex quickly.
