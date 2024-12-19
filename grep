@@ -1,0 +1,54 @@
+Basic Syntax
+The basic command structure is:
+grep [options] pattern [file...]
+Example: Search for "hello" in file.txt:
+grep "hello" file.txt
+2. Common Options
+-i: Ignore case distinctions:
+grep -i "hello" file.txt
+-v: Invert match; show lines that do not match the pattern:
+grep -v "hello" file.txt
+-r or -R: Recursive search through directories:
+grep -r "hello" /path/to/dir
+-n: Show line numbers of matching lines:
+grep -n "hello" file.txt
+-c: Count the number of matching lines:
+grep -c "hello" file.txt
+-l: List files with matching lines instead of the lines themselves:
+grep -l "hello" *.txt
+-w: Match whole words only:
+grep -w "word" file.txt
+3. Using Regular Expressions
+Basic regex patterns can be used:
+.: matches any single character.
+*: matches zero or more of the preceding element.
+^: anchors the match to the start of a line.
+$: anchors the match to the end of a line.
+Example: Match lines starting with "start":
+grep "^start" file.txt
+4. Using Pipes and Redirects
+grep can be combined with other commands through piping:
+ls -l | grep "txt"
+Redirecting with file input:
+cat file.txt | grep "hello"
+5. Highlighting Matches
+Use the --color option to highlight matching text in the output:
+grep --color "hello" file.txt
+6. Searching within Multiple Files
+To search within multiple files:
+grep "hello" file1.txt file2.txt
+Use wildcards:
+grep "hello" *.txt
+7. Combining Options
+You can combine options for more specific searches:
+grep -i -n "hello" file.txt
+8. Save to File
+You can redirect the output of grep to a file:
+grep "hello" file.txt > output.txt
+9. Checking for Patterns
+Use -q for quiet mode (not producing output) to check for the existence of a pattern:
+grep -q "hello" file.txt && echo "Found" || echo "Not Found"
+10. Learning Resources
+Man Pages: Use man grep to access detailed documentation.
+Online Tutorials: Explore resources and exercises online to practice grep.
+Practical Tips:
