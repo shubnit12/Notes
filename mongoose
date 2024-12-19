@@ -1,0 +1,147 @@
+1. Installation
+To get started with Mongoose, you need to install it via npm.
+
+npm install mongoose
+2. Connecting to MongoDB
+Establish a connection to your MongoDB database using Mongoose.
+
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/myDatabase', { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true 
+});
+3. Schema Definition
+Mongoose uses schemas to define the structure of documents. Schemas can also include validation and default values.
+
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  age: { type: Number, min: 0 },
+  email: { type: String, required: true, unique: true }
+});
+4. Model Creation
+A model is a compiled version of the schema. You use the model to create, read, update, and delete documents.
+
+const User = mongoose.model('User', userSchema);
+5. Creating Documents
+You can create new documents using the model.
+
+const user = new User({ name: "Alice", age: 30, email: "alice@example.com" });
+user.save() // Returns a promise
+  .then(() => console.log('User saved!'))
+  .catch(err => console.error(err));
+6. Reading Documents
+Mongoose provides methods for retrieving documents from the database.
+
+Find All
+User.find({}, (err, users) => {
+  if (err) console.error(err);
+  console.log(users);
+});
+Find One
+User.findOne({ name: "Alice" }, (err, user) => {
+  if (err) console.error(err);
+  console.log(user);
+});
+7. Updating Documents
+You can update existing documents with methods such as updateOne, updateMany, and document instance methods.
+
+User.updateOne({ name: "Alice" }, { age: 31 }, (err, res) => {
+  if (err) console.error(err);
+  console.log('User updated:', res);
+});
+8. Deleting Documents
+Remove documents using methods like deleteOne and deleteMany.
+
+User.deleteOne({ name: "Bob" }, (err) => {
+  if (err) console.error(err);
+  console.log('User deleted');
+});
+9. Middleware (Hooks)
+Mongoose supports middleware to perform actions before or after certain operations (save, remove, etc.).
+
+Example: Pre-save Middleware
+userSchema.pre('save', function(next) {
+  // Perform some operation, e.g., hash a password
+  next();
+});
+10. Validation
+Mongoose validates data according to the schema. You can set custom validation with messages.
+
+const userSchema = new mongoose.Schema({
+  age: { 
+    type: Number, 
+    min: [0, 'Age must be positive.'] 
+  }
+});
+11. Static Methods
+You can define static methods on your schema to create model-specific methods.
+
+userSchema.statics.findByEmail = function(email) {
+  return this.findOne({ email });
+};
+12. Instance Methods
+Instance methods are available on the individual document instances.
+
+userSchema.methods.getFullName = function() {
+  return this.firstName + ' ' + this.lastName;
+};
+13. Population
+Mongoose can populate documents with related documents from other collections, allowing you to handle references easily.
+
+const PostSchema = new mongoose.Schema({ author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } });
+Post.findOne({}).populate('author').exec((err, post) => {
+  console.log(post.author.name); // Access the name of the author
+});
+14. Query Building
+Mongoose supports chainable query building methods. You can build queries step by step.
+
+User.find({ age: { $gte: 18 } })
+  .sort({ name: 1 })
+  .limit(10)
+  .exec()
+  .then(users => console.log(users));
+15. Error Handling
+Mongoose errors can be handled in promises or with callbacks. Be sure to manage validation and other errors appropriately.
+
+user.save()
+  .then(() => console.log('User saved!'))
+  .catch(err => {
+    if (err.name === 'ValidationError') {
+      console.error('Validation error:', err.message);
+    } else {
+      console.error(err);
+    }
+  });
+16. Indexes
+You can create indexes in the schema to improve search performance.
+
+userSchema.index({ email: 1 }); // Create an index on the email field
+17. Lean Queries
+By using lean(), Mongoose returns plain JavaScript objects instead of Mongoose documents, which can improve performance.
+
+User.find().lean().exec((err, users) => {
+  console.log(users); // Returns plain objects
+});
+18. Timestamps
+You can automatically manage createdAt and updatedAt properties using the timestamps option in your schema.
+
+const userSchema = new mongoose.Schema({ name: String }, { timestamps: true });
+19. Discriminators
+Discriminators allow you to create multiple models from a base schema, useful for inheritance-like structures.
+
+const options = { discriminatorKey: 'kind' };
+const baseSchema = new mongoose.Schema({ name: String }, options);
+const Base = mongoose.model('Base', baseSchema);
+
+const subSchema = new mongoose.Schema({ subField: String });
+const Sub = Base.discriminator('Sub', subSchema);
+20. Connection Management
+Properly manage your connections, including handling events such as successful connections, errors, and disconnections.
+
+mongoose.connection.on('connected', () => {
+  console.log('MongoDB is connected');
+});
+mongoose.connection.on('error', err => {
+  console.error('MongoDB connection error:', err);
+});
