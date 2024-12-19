@@ -35,3 +35,161 @@ Practical Tips:
 Practice Regularly: Create small scripts to automate repetitive tasks.
 Explore Online Resources: Websites like Bash Academy and the Linux Documentation Project can be helpful.
 Learn from Examples: Look at existing Bash scripts to understand how they’re structured.
+
+
+
+
+
+
+
+
+1. Shebang (#!/bin/bash)
+The shebang defines the script's interpreter.
+
+#!/bin/bash
+echo "Hello, world!"
+2. Variables
+Variables store data, which you can use and manipulate in your scripts.
+
+#!/bin/bash
+name="Alice"
+echo "Hello, $name!"
+3. Input and Output
+You can read user input and output results using read and echo.
+
+#!/bin/bash
+read -p "Enter your name: " name
+echo "Hello, $name!"
+4. Conditional Statements
+if, else, and elif allow you to execute code based on conditions.
+
+#!/bin/bash
+read -p "Enter your age: " age
+if [ $age -ge 18 ]; then
+    echo "You are an adult."
+else
+    echo "You are not an adult."
+fi
+5. Loops
+Loops allow you to repeat a block of code multiple times.
+
+For Loop
+#!/bin/bash
+for i in {1..5}; do
+    echo "Welcome number: $i"
+done
+While Loop
+#!/bin/bash
+counter=1
+while [ $counter -le 5 ]; do
+    echo "Count: $counter"
+    ((counter++))
+done
+6. Functions
+Functions encapsulate reusable blocks of code.
+
+#!/bin/bash
+function greet() {
+    echo "Hello, $1!"
+}
+greet "Bob"
+7. Arrays
+Bash supports arrays, which can hold multiple values.
+
+#!/bin/bash
+fruits=("apple" "banana" "cherry")
+echo "First fruit: ${fruits[0]}"
+8. Command Substitution
+You can capture the output of a command using backticks or $(...).
+
+#!/bin/bash
+current_date=$(date)
+echo "Today's date is: $current_date"
+9. Script Arguments
+You can pass arguments to your script and access them using $1, $2, etc.
+
+#!/bin/bash
+echo "The first argument is: $1"
+Run like: ./script.sh Hello
+
+10. Exit Status
+Every command returns an exit status; you can check it using $?.
+
+#!/bin/bash
+ls /nonexistent_file
+if [ $? -ne 0 ]; then
+    echo "File not found."
+fi
+11. File Tests
+You can check file properties using test operators.
+
+#!/bin/bash
+file="example.txt"
+if [ -f "$file" ]; then
+    echo "$file exists."
+else
+    echo "$file does not exist."
+fi
+12. Here Documents
+You can create multi-line strings using Here Documents.
+
+#!/bin/bash
+cat << EOF
+This is a multi-line
+string using a here document.
+EOF
+13. Trap and Signal Handling
+You can handle signals using the trap command.
+
+#!/bin/bash
+trap 'echo "Script interrupted."; exit' SIGINT
+while true; do
+    echo "Running..."
+    sleep 1
+done
+14. Redirects
+You can redirect output and errors to files.
+
+#!/bin/bash
+echo "This will be saved to a file." > output.txt
+15. Sourcing Scripts
+You can include one script inside another using source or ..
+
+# script1.sh
+echo "This is script 1"
+
+# script2.sh
+source script1.sh
+echo "This is script 2"
+16. Comments
+Use # to add comments to your script.
+
+#!/bin/bash
+# This is a comment
+echo "Hello"
+17. String Manipulation
+You can manipulate strings in Bash to get substrings or modify cases.
+
+#!/bin/bash
+string="Hello, World"
+echo ${string:7:5}  # Outputs: World
+18. Exit from Scripts
+Use exit to exit from a script with a status code.
+
+#!/bin/bash
+if [ "$1" == "" ]; then
+    echo "No argument supplied!"
+    exit 1
+fi
+echo "Argument supplied: $1"
+19. Debugging Scripts
+You can debug scripts using set -x.                    
+
+#!/bin/bash
+set -x
+echo "This will be debugged."
+set +x
+20. Best Practices
+Use double quotes around variable expansions to avoid issues with spaces.
+Always validate input when necessary.
+
